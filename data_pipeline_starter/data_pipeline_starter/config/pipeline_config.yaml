@@ -1,0 +1,33 @@
+# Pipeline Configuration
+# ---------------------
+
+pipeline:
+  name: "sample_pipeline"
+  log_level: "INFO"
+
+extract:
+  source_type: "csv"            # csv | api | database
+  csv:
+    file_path: "data/sample_sales.csv"
+  api:
+    base_url: "https://api.example.com"
+    endpoint: "/data"
+    timeout: 30
+
+transform:
+  drop_duplicates: true
+  drop_nulls_in:
+    - "order_id"
+    - "amount"
+  rename_columns:
+    orderDate: "order_date"
+    customerName: "customer_name"
+
+load:
+  target_type: "sqlite"        # parquet | sqlite
+  parquet:
+    output_path: "data/output/sales_clean.parquet"
+  sqlite:
+    db_path: "data/output/warehouse.db"
+    table_name: "sales"
+    if_exists: "replace"        # replace | append
