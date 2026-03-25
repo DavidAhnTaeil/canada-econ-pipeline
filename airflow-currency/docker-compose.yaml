@@ -1,0 +1,49 @@
+# Docker Compose file for Apache Airflow
+# This defines all the services (containers) that run together
+
+services:
+# PostgreSQL database - Airflow uses this to track pipeline runs
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  airflow-init:
+    image: apache/airflow:2.10.5-python3.12
+    environment: &airflow-env
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      _PIP_ADDIRIONAL_REQUIREMENTS: "request pandas"
+    command: bash -c "airflow db migrate && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com"
+    depends_on:
+      - postgres
+
+  airflow-webserver:
+    image: apache/airflow:2.10.5-python3.12
+    environment: *airflow-env
+    ports:
+      - "8080:8080"
+    command: airflow webserver
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+    depends_on:
+      - airflow-init
+
+  airflow-scheduler:
+    image: apache/airflow:2.10.5-python3.12
+    environment: *airflow-env
+    command: airflow scheduler
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+    depends_on:
+      - airflow-init
+
+volumes:
+  pgdata:

@@ -1,0 +1,23 @@
+[2026-03-25T21:30:02.229+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-03-25T21:30:02.244+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-24T21:30:00+00:00 [queued]>
+[2026-03-25T21:30:02.249+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-24T21:30:00+00:00 [queued]>
+[2026-03-25T21:30:02.250+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 3
+[2026-03-25T21:30:02.261+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): fetch_rates> on 2026-03-24 21:30:00+00:00
+[2026-03-25T21:30:02.281+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=7477) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-03-25T21:30:02.280+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'cad_exchange_rates', 'fetch_rates', 'scheduled__2026-03-24T21:30:00+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/currency_dag.py', '--cfg-path', '/tmp/tmpfb_1iibc']
+[2026-03-25T21:30:02.284+0000] {standard_task_runner.py:72} INFO - Started process 7478 to run task
+[2026-03-25T21:30:02.284+0000] {standard_task_runner.py:105} INFO - Job 15: Subtask fetch_rates
+[2026-03-25T21:30:02.367+0000] {task_command.py:467} INFO - Running <TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-24T21:30:00+00:00 [running]> on host 1273074b55d7
+[2026-03-25T21:30:02.442+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='david' AIRFLOW_CTX_DAG_ID='cad_exchange_rates' AIRFLOW_CTX_TASK_ID='fetch_rates' AIRFLOW_CTX_EXECUTION_DATE='2026-03-24T21:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-24T21:30:00+00:00'
+[2026-03-25T21:30:02.443+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2026-03-25T21:30:02.476+0000] {logging_mixin.py:190} INFO - Fetching USD/CAD...
+[2026-03-25T21:30:03.014+0000] {logging_mixin.py:190} INFO - Fetching EUR/CAD...
+[2026-03-25T21:30:03.143+0000] {logging_mixin.py:190} INFO - Fetching GBP/CAD...
+[2026-03-25T21:30:03.249+0000] {logging_mixin.py:190} INFO - Fetching JPY/CAD...
+[2026-03-25T21:30:03.406+0000] {logging_mixin.py:190} INFO - Fetching KRW/CAD...
+[2026-03-25T21:30:03.623+0000] {logging_mixin.py:190} INFO - Fetched 5 rates
+[2026-03-25T21:30:03.625+0000] {python.py:240} INFO - Done. Returned value was: [{'date': '2026-03-25', 'currency': 'USD', 'currency_name': 'US Dollar', 'rate': 1.3801}, {'date': '2026-03-25', 'currency': 'EUR', 'currency_name': 'Euro', 'rate': 1.5977}, {'date': '2026-03-25', 'currency': 'GBP', 'currency_name': 'British Pound', 'rate': 1.8465}, {'date': '2026-03-25', 'currency': 'JPY', 'currency_name': 'Japanese Yen', 'rate': 0.00867}, {'date': '2026-03-25', 'currency': 'KRW', 'currency_name': 'South Korean Won', 'rate': 0.00092}]
+[2026-03-25T21:30:03.693+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-03-25T21:30:03.694+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=cad_exchange_rates, task_id=fetch_rates, run_id=scheduled__2026-03-24T21:30:00+00:00, execution_date=20260324T213000, start_date=20260325T213002, end_date=20260325T213003
+[2026-03-25T21:30:03.754+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-03-25T21:30:03.766+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

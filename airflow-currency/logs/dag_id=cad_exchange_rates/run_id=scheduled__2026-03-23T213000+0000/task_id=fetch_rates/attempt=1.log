@@ -1,0 +1,106 @@
+[2026-03-25T06:56:17.502+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-03-25T06:56:17.514+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-23T21:30:00+00:00 [queued]>
+[2026-03-25T06:56:17.518+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-23T21:30:00+00:00 [queued]>
+[2026-03-25T06:56:17.518+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 3
+[2026-03-25T06:56:17.525+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): fetch_rates> on 2026-03-23 21:30:00+00:00
+[2026-03-25T06:56:17.535+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'cad_exchange_rates', 'fetch_rates', 'scheduled__2026-03-23T21:30:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/currency_dag.py', '--cfg-path', '/tmp/tmpyg5a1spd']
+[2026-03-25T06:56:17.536+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=354) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-03-25T06:56:17.537+0000] {standard_task_runner.py:105} INFO - Job 2: Subtask fetch_rates
+[2026-03-25T06:56:17.537+0000] {standard_task_runner.py:72} INFO - Started process 355 to run task
+[2026-03-25T06:56:17.587+0000] {task_command.py:467} INFO - Running <TaskInstance: cad_exchange_rates.fetch_rates scheduled__2026-03-23T21:30:00+00:00 [running]> on host 40ded353bd54
+[2026-03-25T06:56:17.653+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='david' AIRFLOW_CTX_DAG_ID='cad_exchange_rates' AIRFLOW_CTX_TASK_ID='fetch_rates' AIRFLOW_CTX_EXECUTION_DATE='2026-03-23T21:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-23T21:30:00+00:00'
+[2026-03-25T06:56:17.654+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2026-03-25T06:56:17.684+0000] {logging_mixin.py:190} INFO - Fetching USD/CAD...
+[2026-03-25T06:56:18.224+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/currency_dag.py", line 43, in fetch_rates
+    response.raise_for_status()
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.bankofcanada.ca/valet/observations/FX/USDCAD/json?start_data=2026-03-25&end_date=2026-03-25
+[2026-03-25T06:56:18.246+0000] {taskinstance.py:1226} INFO - Marking task as UP_FOR_RETRY. dag_id=cad_exchange_rates, task_id=fetch_rates, run_id=scheduled__2026-03-23T21:30:00+00:00, execution_date=20260323T213000, start_date=20260325T065617, end_date=20260325T065618
+[2026-03-25T06:56:18.272+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-03-25T06:56:18.272+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 2 for task fetch_rates (404 Client Error: Not Found for url: https://www.bankofcanada.ca/valet/observations/FX/USDCAD/json?start_data=2026-03-25&end_date=2026-03-25; 355)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/currency_dag.py", line 43, in fetch_rates
+    response.raise_for_status()
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://www.bankofcanada.ca/valet/observations/FX/USDCAD/json?start_data=2026-03-25&end_date=2026-03-25
+[2026-03-25T06:56:18.315+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-03-25T06:56:18.330+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-03-25T06:56:18.332+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
