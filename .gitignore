@@ -1,0 +1,8 @@
+.venv/
+.env
+__pycache__/
+data/
+logs/
+*.pyc
+.pytest_cache/
+exchange_rates.csv
